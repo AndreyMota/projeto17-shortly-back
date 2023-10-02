@@ -9,7 +9,7 @@ export async function postUrlShorten(req, res) {
 
     try {
         // Inserir a URL encurtada na tabela 'urls'
-        const insertUrlQuery = 'INSERT INTO urls (url, "shortUrl", userId, visitCounts) VALUES ($1, $2, $3, $4) RETURNING id';
+        const insertUrlQuery = 'INSERT INTO urls (url, shortUrl, userId, visitCounts) VALUES ($1, $2, $3, $4) RETURNING id';
         const result = await db.query(insertUrlQuery, [url, short, userId, times]);
 
         // Verificar se a inserção foi bem-sucedida e obter o ID gerado
@@ -46,7 +46,7 @@ export async function getUrlById(req, res) {
 export async function getUrlsShort(req, res) {
     try {
         const urlS = req.params.shortUrl;
-        const result = await db.query('SELECT * FROM urls WHERE "shortUrl" = $1', [urlS]);
+        const result = await db.query('SELECT * FROM urls WHERE shortUrl = $1', [urlS]);
         if (result.rowCount < 1) {
             return res.sendStatus(404);
         }
