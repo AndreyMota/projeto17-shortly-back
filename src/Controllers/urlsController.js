@@ -69,13 +69,17 @@ export async function deleteShort(req, res) {
     const urlId = parseInt(req.params.id);
 
     try {
+        const result = await db.query(`SELECT * FROM urls WHERE id = $1`, [id]);
+        if (result.rowCount < 1) {
+            return res.sendStatus(404);
+        }
         // Verifica se a URL encurtada existe e pertence ao usuário autenticado
         const urlQuery = 'SELECT * FROM urls WHERE id = $1 AND userId = $2';
         const urlResult = await db.query(urlQuery, [urlId, userId]);
 
         if (urlResult.rows.length === 0) {
             // URL encurtada não existe ou não pertence ao usuário, responder com status code 401
-            return res.status(404).send('URL encurtada não encontrada ou não autorizada');
+            return res.status(401).send('URL encurtada não encontrada ou não autorizada');
         }
 
         // A URL encurtada pertence ao usuário, então exclua-a
