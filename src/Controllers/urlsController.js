@@ -34,7 +34,7 @@ export async function getUrlById(req, res) {
         const final = result.rows[0];
         const yo = {
             id: final.id,
-            shortUrl: final.short,
+            shortUrl: final.shorturl,
             url: final.url
         }
         res.status(200).send(yo);
@@ -53,7 +53,7 @@ export async function getUrlsShort(req, res) {
         const final = result.rows[0];
         const add = await db.query(`
         UPDATE urls
-        SET "visitCounts" = "visitCounts" + 1
+        SET visitCounts = visitCounts + 1
         WHERE id = $1;
         `, [final.id]);
         res.redirect(final.url);
