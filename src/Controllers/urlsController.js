@@ -42,3 +42,22 @@ export async function getUrlById(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function getUrlsShort(req, res) {
+    try {
+        const urlS = req.params.shortUrl;
+        const result = await db.query('SELECT * FROM urls WHERE short = $1', [urlS]);
+        if (result.rowCount < 1) {
+            return res.sendStatus(404);
+        }
+        const final = result.rows[0];
+        const add = await db.query(`
+        UPDATE urls
+        SET times = times + 1
+        WHERE id = $1;
+        `, [final.id]);
+        res.redirect(final.url);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
