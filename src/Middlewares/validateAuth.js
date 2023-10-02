@@ -11,7 +11,7 @@ export default async function validateAuth(req, res, next) {
 
         if (result.rows.length === 0) {
             // Token não encontrado, retornar status code 401
-            return res.sendStatus(401);
+            return res.status(401).send('token');
         }
 
         // Armazenar informações da sessão no objeto res.locals

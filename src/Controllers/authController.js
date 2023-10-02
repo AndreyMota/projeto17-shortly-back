@@ -72,3 +72,45 @@ export async function signIn(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function getMe(req, res) {
+    const userId = res.locals.userId; // Obtém o ID do usuário autenticado a partir do middleware
+
+    try {
+        // Consultar o usuário com base no ID
+        const userQuery = 'SELECT * FROM users WHERE id = $1';
+        const userResult = await db.query(userQuery, [userId]);
+
+        if (userResult.rows.length === 0) {
+            // Usuário não encontrado, responder com status code 404
+            return res.status(404).send('Usuário não encontrado');
+        }
+
+        const user = userResult.rows[0];
+
+        // Consultar todas as URLs encurtadas pertencentes ao usuário
+        const urlsQuery = 'SELECT id, short, url, times FROM urls WHERE userId = $1';
+        const urlsResult = await db.query(urlsQuery, [userId]);
+
+        // Calcular a soma da quantidade de visitas de todos os links do usuário
+        let visitCount = 0;
+
+        for (const url of urlsResult.rows) {
+            // Use o valor do campo "times" de cada URL encurtada
+            visitCount += url.times;
+        }
+
+        // Montar o objeto de resposta
+        const response = {
+            id: user.id,
+            name: user.name,
+            visitCount: visitCount,
+            shortenedUrls: urlsResult.rows
+        };
+
+        // Responder com status code 200 e o corpo no formato especificado
+        res.status(200).json(response);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
