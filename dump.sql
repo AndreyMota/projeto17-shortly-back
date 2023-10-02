@@ -2,8 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.11 (Ubuntu 13.11-1.pgdg20.04+1)
--- Dumped by pg_dump version 13.11 (Ubuntu 13.11-1.pgdg20.04+1)
+-- Dumped from database version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
+
+-- Started on 2023-10-02 09:42:53 -03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,306 +18,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: btree_gin; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
-
-
---
--- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION btree_gin IS 'support for indexing common datatypes in GIN';
-
-
---
--- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
-
-
---
--- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
-
-
---
--- Name: citext; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
-
-
---
--- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
-
-
---
--- Name: cube; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
-
-
---
--- Name: EXTENSION cube; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION cube IS 'data type for multidimensional cubes';
-
-
---
--- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
-
-
---
--- Name: dict_int; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dict_int WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dict_int; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dict_int IS 'text search dictionary template for integers';
-
-
---
--- Name: dict_xsyn; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dict_xsyn WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dict_xsyn; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dict_xsyn IS 'text search dictionary template for extended synonym processing';
-
-
---
--- Name: earthdistance; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
-
-
---
--- Name: EXTENSION earthdistance; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION earthdistance IS 'calculate great-circle distances on the surface of the Earth';
-
-
---
--- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
-
-
---
--- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
-
-
---
--- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
-
-
---
--- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
-
-
---
--- Name: intarray; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS intarray WITH SCHEMA public;
-
-
---
--- Name: EXTENSION intarray; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION intarray IS 'functions, operators, and index support for 1-D arrays of integers';
-
-
---
--- Name: ltree; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
-
-
---
--- Name: EXTENSION ltree; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION ltree IS 'data type for hierarchical tree-like structures';
-
-
---
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track planning and execution statistics of all SQL statements executed';
-
-
---
--- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
-
-
---
--- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
-
-
---
--- Name: pgrowlocks; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pgrowlocks WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgrowlocks; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pgrowlocks IS 'show row-level locking information';
-
-
---
--- Name: pgstattuple; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pgstattuple WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgstattuple; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pgstattuple IS 'show tuple-level statistics';
-
-
---
--- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
-
-
---
--- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
-
-
---
--- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
-
-
---
--- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
-
-
---
--- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-
-
---
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
-
-
---
--- Name: xml2; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS xml2 WITH SCHEMA public;
-
-
---
--- Name: EXTENSION xml2; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION xml2 IS 'XPath querying and XSLT';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: uhnuweyz
+-- TOC entry 203 (class 1259 OID 16427)
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -326,10 +35,9 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO uhnuweyz;
-
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: uhnuweyz
+-- TOC entry 202 (class 1259 OID 16425)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -341,43 +49,26 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO uhnuweyz;
-
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: uhnuweyz
+-- TOC entry 2971 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: uhnuweyz
+-- TOC entry 2833 (class 2604 OID 16430)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: uhnuweyz
---
-
-COPY public.users (id, name, email, password) FROM stdin;
-1	Nome do Usuário	usuario@email.com	senha123
-2	MenosUm	menosum@gmail.com	{}
-3	Karen	karen@gmail.com	$2b$04$gAMgEsk3dP3rSYKygMXD5ePbPeFLgixAQ2g6q6HTIRKPuBJseoUhm
-4	clarice	clarice@gmail.com	$2b$04$D8/Ji1AGxYjBnnXaFeIPj.rJL80.XWoJ7mbthXCW8MOQ4vSoJlFa.
-\.
-
-
---
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: uhnuweyz
---
-
-SELECT pg_catalog.setval('public.users_id_seq', 4, true);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: uhnuweyz
+-- TOC entry 2835 (class 2606 OID 16439)
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -385,7 +76,8 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_name_key; Type: CONSTRAINT; Schema: public; Owner: uhnuweyz
+-- TOC entry 2837 (class 2606 OID 16437)
+-- Name: users users_name_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -393,12 +85,15 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: uhnuweyz
+-- TOC entry 2839 (class 2606 OID 16435)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
+
+-- Completed on 2023-10-02 09:42:57 -03
 
 --
 -- PostgreSQL database dump complete
