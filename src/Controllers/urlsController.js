@@ -23,3 +23,22 @@ export async function postUrlShorten(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function getUrlById(req, res) {
+    try {
+        const id = req.params.id;
+        const result = await db.query(`SELECT * FROM urls WHERE id = $1`, [id]);
+        if (result.rowCount < 1) {
+            return res.sendStatus(404);
+        }
+        const final = result.rows[0];
+        const yo = {
+            id: final.id,
+            shortUrl: final.short,
+            url: final.url
+        }
+        res.status(200).send(yo);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
