@@ -100,16 +100,60 @@ export async function getMe(req, res) {
             visitCount += url.visitcounts;
         }
 
+        const formatado = []
+        urlsResult.rows.map(x => {
+            formatado.push({
+                id: x.id,
+                shortUrl: x.shorturl,
+                url: x.url,
+                visitCounts: x.visitcounts
+            })
+        })
+
         // Montar o objeto de resposta
         const response = {
             id: user.id,
             name: user.name,
             visitCount: visitCount,
-            shortenedUrls: urlsResult.rows
+            /* shortenedUrls: urlsResult.rows */
+            shortenedUrls: formatado
         };
 
         // Responder com status code 200 e o corpo no formato especificado
         res.status(200).json(response);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export async function rankUs(req, res) {
+    try {
+        // Consulta SQL para obter a classificação dos usuários com base no número de visitas de seus links
+        const query = `
+        SELECT
+            users.id,
+            users.name,
+            COALESCE(COUNT(urls.id), 0) AS linksCount,
+            COALESCE(SUM(urls.visitCounts), 0) AS visitCount
+        FROM users
+        LEFT JOIN urls ON users.id = urls.userId
+        GROUP BY users.id
+        ORDER BY visitCount DESC
+        LIMIT 10
+        `;
+
+        const result = await db.query(query);
+
+        // Mapear o resultado da consulta para o formato de resposta especificado
+        const ranking = result.rows.map((row) => ({
+            id: row.id,
+            name: row.name,
+            linksCount: row.linkscount,
+            visitCount: row.visitcount
+        }));
+
+        // Responder com status code 200 e o corpo no formato especificado
+        res.status(200).json(ranking);
     } catch (err) {
         res.status(500).send(err.message);
     }
