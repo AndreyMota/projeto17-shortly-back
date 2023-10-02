@@ -31,3 +31,44 @@ export async function postSignUp(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+
+import { v4 as uuidv4 } from 'uuid'; // Importe o 'v4' da biblioteca 'uuid'
+
+export async function signIn(req, res) {
+    const { email, password } = req.body;
+
+    try {
+        // Consultar o banco de dados para verificar se o usuário existe
+        const query = 'SELECT * FROM users WHERE email = $1';
+        const result = await db.query(query, [email]);
+
+        if (result.rows.length === 0) {
+            // Usuário não encontrado, retornar status code 404
+            return res.status(404).send('E-mail não cadastrado!');
+        }
+
+        // Verificar se a senha está correta
+        const user = result.rows[0];
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            // Senha incorreta, retornar status code 401
+            return res.status(401).send('Senha incorreta! Tente novamente!');
+        }
+
+        // Gerar um token compatível com SQL usando UUID v4
+        const token = uuidv4();
+
+        // Inserir o token na tabela sessions
+        const insertTokenQuery = 'INSERT INTO sessions (token, user_id) VALUES ($1, $2)';
+        await db.query(insertTokenQuery, [token, user.id]);
+
+        // Retornar os dados do usuário e o token
+        res.status(200).json({
+            token: token
+        });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
