@@ -5,7 +5,7 @@
 -- Dumped from database version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
 -- Dumped by pg_dump version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
 
--- Started on 2023-10-02 12:17:42 -03
+-- Started on 2023-10-02 13:24:20 -03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -30,7 +30,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.sessions (
     id integer NOT NULL,
     token character varying(255),
-    user_id integer
+    user_id integer,
+    createdat timestamp without time zone
 );
 
 
@@ -67,7 +68,8 @@ CREATE TABLE public.urls (
     url character varying(255) NOT NULL,
     short character varying(255) NOT NULL,
     userid integer,
-    times integer
+    times integer,
+    createdat timestamp without time zone
 );
 
 
@@ -227,7 +229,7 @@ ALTER TABLE ONLY public.urls
     ADD CONSTRAINT urls_userid_fkey FOREIGN KEY (userid) REFERENCES public.users(id);
 
 
--- Completed on 2023-10-02 12:17:47 -03
+-- Completed on 2023-10-02 13:24:22 -03
 
 --
 -- PostgreSQL database dump complete
