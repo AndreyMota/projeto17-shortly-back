@@ -5,7 +5,7 @@
 -- Dumped from database version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
 -- Dumped by pg_dump version 12.16 (Ubuntu 12.16-0ubuntu0.20.04.1)
 
--- Started on 2023-10-02 13:24:20 -03
+-- Started on 2023-10-02 16:14:52 -03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -66,9 +66,9 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 CREATE TABLE public.urls (
     id integer NOT NULL,
     url character varying(255) NOT NULL,
-    short character varying(255) NOT NULL,
+    shorturl character varying(255) NOT NULL,
     userid integer,
-    times integer,
+    visitcounts integer,
     createdat timestamp without time zone
 );
 
@@ -229,7 +229,7 @@ ALTER TABLE ONLY public.urls
     ADD CONSTRAINT urls_userid_fkey FOREIGN KEY (userid) REFERENCES public.users(id);
 
 
--- Completed on 2023-10-02 13:24:22 -03
+-- Completed on 2023-10-02 16:14:53 -03
 
 --
 -- PostgreSQL database dump complete

@@ -89,7 +89,7 @@ export async function getMe(req, res) {
         const user = userResult.rows[0];
 
         // Consultar todas as URLs encurtadas pertencentes ao usuário
-        const urlsQuery = 'SELECT id, short, url, times FROM urls WHERE userId = $1';
+        const urlsQuery = 'SELECT id, shortUrl, url, visitCounts FROM urls WHERE userId = $1';
         const urlsResult = await db.query(urlsQuery, [userId]);
 
         // Calcular a soma da quantidade de visitas de todos os links do usuário
@@ -97,7 +97,7 @@ export async function getMe(req, res) {
 
         for (const url of urlsResult.rows) {
             // Use o valor do campo "times" de cada URL encurtada
-            visitCount += url.times;
+            visitCount += url.visitcounts;
         }
 
         // Montar o objeto de resposta

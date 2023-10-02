@@ -9,7 +9,7 @@ export async function postUrlShorten(req, res) {
 
     try {
         // Inserir a URL encurtada na tabela 'urls'
-        const insertUrlQuery = 'INSERT INTO urls (url, short, userId, times) VALUES ($1, $2, $3, $4) RETURNING id';
+        const insertUrlQuery = 'INSERT INTO urls (url, "shortUrl", userId, visitCounts) VALUES ($1, $2, $3, $4) RETURNING id';
         const result = await db.query(insertUrlQuery, [url, short, userId, times]);
 
         // Verificar se a inserção foi bem-sucedida e obter o ID gerado
@@ -46,14 +46,14 @@ export async function getUrlById(req, res) {
 export async function getUrlsShort(req, res) {
     try {
         const urlS = req.params.shortUrl;
-        const result = await db.query('SELECT * FROM urls WHERE short = $1', [urlS]);
+        const result = await db.query('SELECT * FROM urls WHERE "shortUrl" = $1', [urlS]);
         if (result.rowCount < 1) {
             return res.sendStatus(404);
         }
         const final = result.rows[0];
         const add = await db.query(`
         UPDATE urls
-        SET times = times + 1
+        SET "visitCounts" = "visitCounts" + 1
         WHERE id = $1;
         `, [final.id]);
         res.redirect(final.url);
@@ -75,7 +75,7 @@ export async function deleteShort(req, res) {
 
         if (urlResult.rows.length === 0) {
             // URL encurtada não existe ou não pertence ao usuário, responder com status code 401
-            return res.status(401).send('URL encurtada não encontrada ou não autorizada');
+            return res.status(404).send('URL encurtada não encontrada ou não autorizada');
         }
 
         // A URL encurtada pertence ao usuário, então exclua-a
