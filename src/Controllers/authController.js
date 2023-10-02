@@ -106,7 +106,7 @@ export async function getMe(req, res) {
                 id: x.id,
                 shortUrl: x.shorturl,
                 url: x.url,
-                visitCounts: x.visitcounts
+                visitCount: x.visitcounts
             })
         })
 
