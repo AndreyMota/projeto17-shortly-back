@@ -45,7 +45,7 @@ export async function signIn(req, res) {
 
         if (result.rows.length === 0) {
             // Usuário não encontrado, retornar status code 404
-            return res.status(404).send('E-mail não cadastrado!');
+            return res.status(401).send('E-mail não cadastrado!');
         }
 
         // Verificar se a senha está correta

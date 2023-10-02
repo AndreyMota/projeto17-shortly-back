@@ -15,7 +15,7 @@ export async function postUrlShorten(req, res) {
         // Verificar se a inserção foi bem-sucedida e obter o ID gerado
         if (result.rowCount === 1) {
             const newUrlId = result.rows[0].id;
-            res.status(201).json({ id: newUrlId });
+            res.status(201).json({ id: newUrlId, shortUrl: short });
         } else {
             res.status(500).send('Erro ao encurtar a URL');
         }
